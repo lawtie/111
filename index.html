@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine Countdown</title>
+    <style>
+        body {
+            background-color: #ffe6e6;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }      
+        .photo, .hamster {
+            width: 150px;
+            height: 150px;
+            border-radius: 10px;
+            object-fit: cover;
+            margin: 10px;
+        }
+        .countdown {
+            font-size: 2rem;
+            margin-top: 20px;
+        }
+        .falling-hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        .heart {
+            position: absolute;
+            color: red;
+            font-size: 20px;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            from { transform: translateY(-10px); opacity: 1; }
+            to { transform: translateY(100vh); opacity: 0; }
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        .btn {
+            padding: 10px 20px;
+            font-size: 1.5rem;
+            border: none;
+            cursor: pointer;
+            margin: 5px;
+            transition: transform 0.2s;
+        }
+        .no-btn {
+            background-color: red;
+            color: white;
+        }
+        .yes-btn {
+            background-color: pink;
+            color: black;
+        }
+        .message {
+            display: none;
+            font-size: 1.8rem;
+            margin-top: 20px;
+        }
+        .gif-container {
+            display: none;
+            margin-top: 20px;
+        }
+        .gif-container img {
+            width: 150px;
+        }  
+        .gallery {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px auto;
+            padding: 10px;
+        }
+        .gallery img {
+            width: 150px;
+            height: 150px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>halo teteh kesayanganku, They say Valentine is for someone special, jadi karena kamu orang special kesayanganku, apakah kamumau valetine this year with me? choose yes please!!!!
+
+        💖</h1>
+    <div class="countdown" id="countdown"></div>
+    <div class="falling-hearts" id="falling-hearts"></div>
+    <div class="buttons">
+        <button class="btn yes-btn" id="yes-btn" onclick="showMessage()">Yes</button>
+        <button class="btn no-btn" id="no-btn" onclick="resizeButtons()">No</button>
+    </div>
+    <div class="message" id="message">Yay! Aku tahu kamu bakal pilih ini! 🎉💖</div>
+    <div class="gif-container" id="gif-container">
+        <img src="https://media.giphy.com/media/jD4DwBtqPXRXa/giphy.gif" alt="Sad Gif">
+    </div>
+    <div class="container">
+        <img src="image/Tak berjudul247_20250213115747.png" alt="Her Photo" class="photo">
+        <img src="image/pepe.jpg" alt="Cute Hamster" class="hamster">
+    </div>
+    <div class="gallery" id="gallery">
+        <img src="image/370ef405-5299-4c5b-9525-02f7ea6cf2f9.jfif" alt="Memory 1">
+        <img src="image/2.jfif" alt="Memory 2">
+        <img src="image/3.jfif" alt="Memory 3">
+        <img src="image/pipi.jpg" alt="Memory 4">
+    </div>
+    
+    <script>
+        function countdown() {
+            const valentine = new Date('February 13, 2025 00:00:00').getTime();
+            const x = setInterval(function() {
+                const now = new Date().getTime();
+                const distance = valentine - now;
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                document.getElementById("countdown").innerHTML = `💘 ${days} days until Valentine's Day 💘`;
+                if (distance < 0) {
+                    clearInterval(x);
+                    document.getElementById("countdown").innerHTML = "Happy Valentine's Day! 🎉";
+                }
+            }, 1000);
+        }
+        countdown();
+
+        function createHearts() {
+            setInterval(() => {
+                const heart = document.createElement("div");
+                heart.classList.add("heart");
+                heart.innerHTML = "❤️";
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.animationDuration = Math.random() * 3 + 2 + "s";
+                document.getElementById("falling-hearts").appendChild(heart);
+                setTimeout(() => heart.remove(), 5000);
+            }, 300);
+        }
+        createHearts();
+
+        let noClicks = 0;
+        function resizeButtons() {
+            noClicks++;
+            const noBtn = document.getElementById("no-btn");
+            const yesBtn = document.getElementById("yes-btn");
+            noBtn.style.transform = `scale(${1 - noClicks * 0.1})`;
+            yesBtn.style.transform = `scale(${1 + noClicks * 2.0})`;
+            if (noClicks >= 7) {
+                noBtn.classList.add("hidden");
+                document.getElementById("gif-container").style.display = "block";
+            }
+        }
+
+        function showMessage() {
+            document.getElementById("message").style.display = "block";
+            setTimeout(goToYayPage, 2000);
+        }
+
+        function goToYayPage() {
+            document.body.innerHTML = `
+                <div style="text-align: center; font-size: 2rem; margin-top: 50px;">
+                    Yay!!!!!, aku tau sih kamu bakal pilih ini, secara aku ka keren, lucu, baik, sayang kamu, dan keren, kamu mau kemana? kapan, aku akan hapus semua sceadule aku buat kamuu sayangku, cantikku, duniaku! <3
+                    <br>
+                    <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExazZpa3Y2c3IwaTJhN2E3d2MzNjg0c3RqbDZzb2hyZ3Fra2p3cXc1cSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/yc2pHdAoxVOrJ2m5Ha/giphy.gif" style="width: 150px; height: 150px; margin-top: 20px;">
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
